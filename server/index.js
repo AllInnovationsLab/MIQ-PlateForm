@@ -21,6 +21,7 @@ const server = new ApolloServer({
   const { url } = await server.listen(4000);
   console.log(`🚀  Server ready at ${url}`);
 })();
-// db.connect()
-//   .then(() => console.log("db connected"))
-//   .catch((err) => console.log(err.message));
+db.sequelize
+  .authenticate()
+  .then(() => console.log("db connected"))
+  .catch((err) => console.log(err.message));
