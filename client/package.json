@@ -13,7 +13,8 @@
     "@apollo/experimental-nextjs-app-support": "^0.4.3",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "tw-elements": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "latest",

@@ -1,40 +1,32 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('reactQuestion', {
+  return sequelize.define('users', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    question: {
-      type: DataTypes.TEXT,
+    name: {
+      type: DataTypes.CHAR(50),
       allowNull: false
     },
-    option1: {
-      type: DataTypes.TEXT,
+    email: {
+      type: DataTypes.CHAR(50),
       allowNull: false
     },
-    option2: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    option3: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    answer: {
-      type: DataTypes.TEXT,
+    password: {
+      type: DataTypes.CHAR(250),
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'reactQuestion',
+    tableName: 'users',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "reactQuestion_pkey",
+        name: "users_pkey",
         unique: true,
         fields: [
           { name: "id" },
