@@ -1,12 +1,41 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Poppins } from "next/font/google";
+import { gql, useMutation } from "@apollo/client";
+
+// Define mutation
+const CREATE_USER = gql`
+  mutation add($type: User!) {
+    addUser(type: $type) {
+      id
+      name
+    }
+  }
+`;
 
 function Register() {
-  const poppins = Poppins();
+  // const poppins = Poppins();
+  const [user, setUser] = useState<User>({ name: "", email: "", password: "" });
+  const [createUser, { error }] = useMutation(CREATE_USER);
+  const emailRegex: RegExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  const passwordRegex: RegExp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
+
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="max-w-lg bg-white rounded-lg p-8 shadow-md dark:bg-neutral-700">
-        <form className="space-y-6">
+        <form
+          className="space-y-6"
+          onSubmit={async (e) => {
+            e.preventDefault();
+
+            const res = await createUser({
+              variables: {
+                user,
+              },
+            });
+            if (!res) console.log(error?.message);
+          }}
+        >
           {/* Name */}
           <div className="mb-4">
             <input
@@ -14,6 +43,9 @@ function Register() {
               className="input-field"
               id="exampleInput123"
               placeholder="Name"
+              required
+              title="name should contain at minmum 3 characters"
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
 
@@ -23,7 +55,11 @@ function Register() {
               type="email"
               className="input-field"
               id="exampleInput125"
-              placeholder="Email Address"
+              placeholder="Enter email Address example@email.com"
+              pattern={emailRegex.source}
+              required
+              title="enter a valid email example@email.com"
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
           </div>
 
@@ -34,20 +70,11 @@ function Register() {
               className="input-field"
               id="exampleInput126"
               placeholder="Password"
+              // pattern={passwordRegex.source}
+              required
+              title="Password should contain one UpperCase , one lowerCase and one digit"
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
-          </div>
-
-          {/* Subscribe Checkbox */}
-          <div className="flex items-center mb-4">
-            <input
-              className="checkbox"
-              type="checkbox"
-              value=""
-              id="exampleCheck25"
-            />
-            <label className="label-checkbox" htmlFor="exampleCheck25">
-              Subscribe to our newsletter
-            </label>
           </div>
 
           {/* Submit Button */}
