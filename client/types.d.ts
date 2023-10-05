@@ -18,3 +18,8 @@ type OneQuestion = {
   option3: string;
   answer: string;
 };
+type User = {
+  name: string;
+  email: RegExp | string;
+  password: string;
+};

@@ -31,8 +31,14 @@ const typeDefs = gql`
     questions: [Question]!
   }
 
+  input UserInfo {
+    name: String!
+    email: String!
+    password: String!
+  }
+
   type Mutation {
-    addUser(name: String, email: String, password: String): User
+    addUser(input: UserInfo!): User
   }
 `;
 

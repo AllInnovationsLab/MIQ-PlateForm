@@ -7,12 +7,12 @@ const cors = require("cors");
 
 // interface MyContext {
 //   token?: String;}
-
+// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   cors: {
-    origin: "https://studio.apollographql.com",
+    origin: "http://localhost:3000",
     credentials: true,
   },
   context: { db },

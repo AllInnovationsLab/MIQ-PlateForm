@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 
-const query = gql`
+const questionList = gql`
   query {
     questions {
       question
@@ -23,7 +23,7 @@ const green = { backgroundColor: "green" };
 const white = { backgroundColor: "white" };
 export default function questionsList() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data } = useSuspenseQuery<Question>(query);
+  const { data } = useSuspenseQuery<Question>(questionList);
   const [questionsState, setQuestionsState] = useState<OneQuestion[]>(
     data.questions
   );
@@ -42,7 +42,7 @@ export default function questionsList() {
   const handleSubmitAnswers: () => void = () => {
     setChangeBackground(true);
   };
-  console.log(questionsState);
+
   return (
     <div>
       <h1></h1>
