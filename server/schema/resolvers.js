@@ -24,7 +24,7 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, args) => {
       try {
-        const { name, email, password } = args;
+        const { name, email, password } = args.input;
         const existingUser = await User.findOne({ where: { email } });
         if (!existingUser) {
           const hashPassword = await bcrypt.hash(password, 10);

@@ -5,8 +5,8 @@ import { gql, useMutation } from "@apollo/client";
 
 // Define mutation
 const CREATE_USER = gql`
-  mutation add($type: User!) {
-    addUser(type: $type) {
+  mutation add($input: UserInfo!) {
+    addUser(input: $input) {
       id
       name
     }
@@ -30,7 +30,11 @@ function Register() {
 
             const res = await createUser({
               variables: {
-                user,
+                input: {
+                  name: user.name,
+                  email: user.email,
+                  password: user.password,
+                },
               },
             });
             if (!res) console.log(error?.message);
@@ -56,7 +60,7 @@ function Register() {
               className="input-field"
               id="exampleInput125"
               placeholder="Enter email Address example@email.com"
-              pattern={emailRegex.source}
+              //   pattern={emailRegex.source}
               required
               title="enter a valid email example@email.com"
               onChange={(e) => setUser({ ...user, email: e.target.value })}
