@@ -2,10 +2,9 @@ import React from "react";
 import { Poppins } from "next/font/google";
 
 function Register() {
-  const poppins = Poppins();
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="max-w-lg bg-white rounded-lg p-8 shadow-md dark:bg-neutral-700">
+      <div className="max-w-lg bg-primary rounded-lg p-8 shadow-md dark:bg-neutral-700">
         <form className="space-y-6">
           {/* Name */}
           <div className="mb-4">
