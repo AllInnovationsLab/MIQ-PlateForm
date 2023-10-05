@@ -28,7 +28,12 @@ const resolvers = {
         const existingUser = await User.findOne({ where: { email } });
         if (!existingUser) {
           const hashPassword = await bcrypt.hash(password, 10);
-          await User.create({ name, email, password: hashPassword });
+          const newUser = await User.create({
+            name,
+            email,
+            password: hashPassword,
+          });
+          return newUser;
         } else throw new Error("Username or email is already taken");
       } catch (error) {
         throw new Error(`Problem creating a new user : ${error.message}`);
