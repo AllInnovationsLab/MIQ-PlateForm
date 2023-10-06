@@ -22,9 +22,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (parent, args) => {
+    addUser: async (parent, { input }) => {
       try {
-        const { name, email, password } = args.input;
+        const { name, email, password } = input;
         const existingUser = await User.findOne({ where: { email } });
         if (!existingUser) {
           const hashPassword = await bcrypt.hash(password, 10);
@@ -37,6 +37,23 @@ const resolvers = {
         } else throw new Error("Username or email is already taken");
       } catch (error) {
         throw new Error(`Problem creating a new user : ${error.message}`);
+      }
+    },
+    login: async (_, { input }) => {
+      try {
+        const { email, password } = input;
+        const user = await User.findOne({ where: { email } });
+        if (user) {
+          const matchPassword = await bcrypt.compare(
+            password.trim(),
+            user.password.trim()
+          );
+
+          if (matchPassword) return user;
+          else throw new Error("password not match");
+        } else throw new Error("email not found");
+      } catch (error) {
+        throw new Error(error.message);
       }
     },
   },
